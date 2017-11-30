@@ -1,3 +1,8 @@
+/*This is the arduino code for the nRF module at the receiving end. This modules 
+  receives the velocities of the left and right wheels and publishes it on different
+  ROS topics using ROS Serial.  
+*/
+
     #include <SPI.h>
     #include <nRF24L01.h>
     #include <RF24.h>
@@ -12,7 +17,6 @@
     ros::Publisher chatter2("r_vel", &right);
         
     RF24 radio(9,10)  ; // CNS, CE
-    //const byte address[6] = "10001";
     const byte address = 0xf0f0f0f0c3;
     
       
@@ -33,27 +37,18 @@
     {
       if (radio.available()) 
       { 
-        //Serial.println("abc");
         float data[2];
         
         radio.read(&data, sizeof(data));
-          
-        //Serial.println(data[0]);
 
         if(data[0] == 1)
         {
           left.data = data[1];
           chatter1.publish(&left);
-          //Serial.print("Left_vel:");
-          //Serial.println(data[1]);
         }
         if(data[0] ==2){
-//          Serial.println("Received");
-
           right.data = data[1];
           chatter2.publish(&right);
-          //Serial.print("Right_vel:");
-          //Serial.println(data[1]);
         }
         
       }
