@@ -80,8 +80,7 @@ void loop()
    ai = sqrt(sq(aix)+sq(aiy)+sq(aiz));
   sin_theta_z = (-aiz/ai);
   cos_theta_z = sqrt(1 - (sin_theta_z*sin_theta_z)) ;
-    
-  //Serial.print(cos_theta_z);
+
   giz = giz / cos_theta_z;
 
   
@@ -106,13 +105,13 @@ void loop()
   
   // convert from raw data to gravity and degrees/second units
   yaw = convertRawGyro(avggz);
-  //Serial.println(yaw);
+
   yaw0 = yaw/6.0;
 
   float data[2];
-  data[0] = 2;    // 1 for left and 2 for right
+  data[0] = 2;    // 2 for right
   data[1] = yaw0;
-  //delay(10);
+
   bool ok = radio.write(&data, sizeof(data));
   /*if (ok)
       Serial.println("ok...\n\r");
